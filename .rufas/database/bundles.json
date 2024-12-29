@@ -1,0 +1,17 @@
+[
+  {
+    "name": "dsfsdf",
+    "description": "sdfsdf",
+    "isMaster": false,
+    "fileIds": [
+      "alert.tsx",
+      "button.tsx",
+      "dialog.tsx",
+      "dropdown-menu.tsx"
+    ],
+    "id": "b_1735451717963",
+    "createdAt": 1735451717963,
+    "lastBundled": 1735451717963,
+    "status": "fresh"
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "public/vite.svg",
+    "path": "public/vite.svg",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/assets/react.svg",
+    "path": "src/assets/react.svg",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/alert.tsx",
+    "path": "src/components/ui/alert.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/button.tsx",
+    "path": "src/components/ui/button.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/dialog.tsx",
+    "path": "src/components/ui/dialog.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/dropdown-menu.tsx",
+    "path": "src/components/ui/dropdown-menu.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/input.tsx",
+    "path": "src/components/ui/input.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/label.tsx",
+    "path": "src/components/ui/label.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/ui/scroll-area.tsx",
+    "path": "src/components/ui/scroll-area.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/BundleManagement.tsx",
+    "path": "src/components/BundleManagement.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/mode-toggle.tsx",
+    "path": "src/components/mode-toggle.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/TagManagement.tsx",
+    "path": "src/components/TagManagement.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/theme-provider.tsx",
+    "path": "src/components/theme-provider.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/components/tree-view.tsx",
+    "path": "src/components/tree-view.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/lib/utils.ts",
+    "path": "src/lib/utils.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/store/fileSystemStore.ts",
+    "path": "src/store/fileSystemStore.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/utils/fileSystem.ts",
+    "path": "src/utils/fileSystem.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/App.tsx",
+    "path": "src/App.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/config.ts",
+    "path": "src/config.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/database.ts",
+    "path": "src/database.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/databaseOperations.ts",
+    "path": "src/databaseOperations.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/index.css",
+    "path": "src/index.css",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/main.tsx",
+    "path": "src/main.tsx",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "src/vite-env.d.ts",
+    "path": "src/vite-env.d.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "components.json",
+    "path": "components.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "eslint.config.js",
+    "path": "eslint.config.js",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "index.html",
+    "path": "index.html",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "package-lock.json",
+    "path": "package-lock.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "package.json",
+    "path": "package.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "postcss.config.js",
+    "path": "postcss.config.js",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "README.md",
+    "path": "README.md",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "tailwind.config.js",
+    "path": "tailwind.config.js",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "tsconfig.app.json",
+    "path": "tsconfig.app.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "tsconfig.json",
+    "path": "tsconfig.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "tsconfig.node.json",
+    "path": "tsconfig.node.json",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  },
+  {
+    "id": "vite.config.ts",
+    "path": "vite.config.ts",
+    "tagIds": [],
+    "bundleIds": [],
+    "lastModified": 1735453212508
+  }
+]
