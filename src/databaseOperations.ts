@@ -8,8 +8,6 @@ import type {
 
 let databaseDirHandle: FileSystemDirectoryHandle | null = null
 
-// const DB_PATH = '.rufas/database'
-
 // initialize database directory
 export async function initializeDatabaseDir(
   rootDirHandle: FileSystemDirectoryHandle
@@ -135,10 +133,7 @@ export async function getAllFiles(): Promise<RufasFile[]> {
   return readJsonFile<RufasFile[]>('files.json')
 }
 
-export async function updateFiles(files: RufasFile[]): Promise<void> {
-  return writeJsonFile('files.json', files)
-}
-
+// Update file
 export async function updateFile(file: RufasFile): Promise<void> {
   const files = await getAllFiles()
   const index = files.findIndex((f) => f.id === file.id)
@@ -148,6 +143,11 @@ export async function updateFile(file: RufasFile): Promise<void> {
     files.push(file)
   }
   return updateFiles(files)
+}
+
+// Update files
+export async function updateFiles(files: RufasFile[]): Promise<void> {
+  return writeJsonFile('files.json', files)
 }
 
 // Tag operations
@@ -182,7 +182,10 @@ export async function updateBundles(bundles: RufasBundle[]): Promise<void> {
 export async function createBundle(
   bundle: Omit<RufasBundle, 'id' | 'createdAt' | 'lastBundled' | 'status'>
 ): Promise<RufasBundle> {
-  const bundles = await getAllBundles()
+  // Get both bundles and files
+  const [bundles, files] = await Promise.all([getAllBundles(), getAllFiles()])
+
+  // Create the new bundle
   const newBundle: RufasBundle = {
     ...bundle,
     id: `b_${Date.now()}`,
@@ -191,7 +194,21 @@ export async function createBundle(
     status: 'fresh',
   }
   bundles.push(newBundle)
-  await updateBundles(bundles)
+
+  // Update the files to include this bundle ID
+  const updatedFiles = files.map((file) => {
+    if (bundle.fileIds.includes(file.id)) {
+      return {
+        ...file,
+        bundleIds: [...(file.bundleIds || []), newBundle.id],
+      }
+    }
+    return file
+  })
+
+  // Update both files in parallel
+  await Promise.all([updateBundles(bundles), updateFiles(updatedFiles)])
+
   return newBundle
 }
 
@@ -255,4 +272,248 @@ export async function cleanupOrphanedFiles(
     updateTags(updatedTags),
     updateBundles(updatedBundles),
   ])
+}
+
+// Clean up references when a file is deleted
+export async function cleanupDeletedFile(filePath: string): Promise<void> {
+  try {
+    // Get current data
+    const [files, tags, bundles] = await Promise.all([
+      getAllFiles(),
+      getAllTags(),
+      getAllBundles(),
+    ])
+
+    // Find the file ID that matches this path
+    const fileId = files.find((f) => f.path === filePath)?.id
+
+    if (!fileId) return
+
+    // Remove file from tags using the actual fileId
+    const updatedTags = tags.map((tag) => ({
+      ...tag,
+      fileIds: tag.fileIds.filter((id) => id !== fileId),
+    }))
+
+    // Remove file from bundles
+    const updatedBundles = bundles.map((bundle) => ({
+      ...bundle,
+      fileIds: bundle.fileIds.filter((id) => id !== fileId),
+      status: bundle.fileIds.includes(fileId)
+        ? ('stale' as const)
+        : bundle.status,
+    }))
+
+    // Save updates
+    await Promise.all([updateTags(updatedTags), updateBundles(updatedBundles)])
+  } catch (error) {
+    console.error('Failed to cleanup deleted file references:', error)
+    throw error
+  }
+}
+
+// Clean up references when a tag is deleted
+export async function cleanupDeletedTag(tagId: string): Promise<void> {
+  try {
+    // Get current files
+    const files = await getAllFiles()
+
+    // Remove tag from all files
+    const updatedFiles = files.map((file) => ({
+      ...file,
+      tagIds: file.tagIds.filter((id) => id !== tagId),
+    }))
+
+    // Save updates
+    await updateFiles(updatedFiles)
+  } catch (error) {
+    console.error('Failed to cleanup deleted tag references:', error)
+    throw error
+  }
+}
+
+// Clean up references when a bundle is deleted
+export async function cleanupDeletedBundle(bundleId: string): Promise<void> {
+  try {
+    // Get current files
+    const files = await getAllFiles()
+
+    // Remove bundle from all files
+    const updatedFiles = files.map((file) => ({
+      ...file,
+      bundleIds: file.bundleIds.filter((id) => id !== bundleId),
+    }))
+
+    // Save updates
+    await updateFiles(updatedFiles)
+  } catch (error) {
+    console.error('Failed to cleanup deleted bundle references:', error)
+    throw error
+  }
+}
+
+// Validate and cleanup orphaned references
+export async function validateReferences(): Promise<void> {
+  try {
+    const [files, tags, bundles] = await Promise.all([
+      getAllFiles(),
+      getAllTags(),
+      getAllBundles(),
+    ])
+
+    // Create sets for faster lookups
+    const fileIds = new Set(files.map((f) => f.id))
+    const tagIds = new Set(tags.map((t) => t.id))
+    const bundleIds = new Set(bundles.map((b) => b.id))
+
+    // Clean up files
+    const updatedFiles = files.map((file) => ({
+      ...file,
+      tagIds: file.tagIds.filter((id) => tagIds.has(id)),
+      bundleIds: file.bundleIds.filter((id) => bundleIds.has(id)),
+    }))
+
+    // Clean up tags
+    const updatedTags = tags.map((tag) => ({
+      ...tag,
+      fileIds: tag.fileIds.filter((id) => fileIds.has(id)),
+    }))
+
+    // Clean up bundles
+    const updatedBundles = bundles.map((bundle) => ({
+      ...bundle,
+      fileIds: bundle.fileIds.filter((id) => fileIds.has(id)),
+      // Update status if any files were removed
+      status: bundle.fileIds.some((id) => !fileIds.has(id))
+        ? ('stale' as const)
+        : bundle.status,
+    }))
+
+    // Save all updates
+    await Promise.all([
+      updateFiles(updatedFiles),
+      updateTags(updatedTags),
+      updateBundles(updatedBundles),
+    ])
+  } catch (error) {
+    console.error('Failed to validate and cleanup references:', error)
+    throw error
+  }
+}
+
+// Helper function to update bundle statuses based on file modifications
+export async function updateBundleStatusesForFile(
+  filePath: string
+): Promise<void> {
+  try {
+    const bundles = await getAllBundles()
+    const updatedBundles = bundles.map((bundle) => {
+      if (bundle.fileIds.includes(filePath)) {
+        return {
+          ...bundle,
+          status: 'stale' as const,
+        }
+      }
+      return bundle
+    })
+
+    await updateBundles(updatedBundles)
+  } catch (error) {
+    console.error('Failed to update bundle statuses:', error)
+    throw error
+  }
+}
+
+// removeTagFromFile mfer
+export async function removeTagFromFile(
+  tagId: string,
+  filePath: string
+): Promise<void> {
+  try {
+    // Get current files and tags
+    const [files, tags] = await Promise.all([getAllFiles(), getAllTags()])
+
+    // Update file
+    const updatedFiles = files.map((file) => {
+      if (file.id === filePath) {
+        return {
+          ...file,
+          tagIds: file.tagIds.filter((id) => id !== tagId),
+        }
+      }
+      return file
+    })
+
+    // Update tag
+    const updatedTags = tags.map((tag) => {
+      if (tag.id === tagId) {
+        return {
+          ...tag,
+          fileIds: tag.fileIds.filter((id) => id !== filePath),
+        }
+      }
+      return tag
+    })
+
+    // Save both updates
+    await Promise.all([updateFiles(updatedFiles), updateTags(updatedTags)])
+  } catch (error) {
+    console.error('Failed to remove tag from file:', error)
+    throw error
+  }
+}
+
+// In databaseOperations.ts
+export async function synchronizeDatabase(
+  currentFiles: RufasFile[]
+): Promise<void> {
+  try {
+    // 1. Get current state of all three files
+    const [existingFiles, tags, bundles] = await Promise.all([
+      getAllFiles(),
+      getAllTags(),
+      getAllBundles(),
+    ])
+
+    // 2. Update files.json - preserve tags/bundles for existing files
+    const updatedFiles = currentFiles.map((newFile) => {
+      const existingFile = existingFiles.find((f) => f.id === newFile.id)
+      if (existingFile) {
+        return {
+          ...newFile,
+          tagIds: existingFile.tagIds,
+          bundleIds: existingFile.bundleIds,
+        }
+      }
+      return newFile
+    })
+
+    // Create a Set of valid file IDs for efficient lookup
+    const validFileIds = new Set(updatedFiles.map((f) => f.id))
+
+    // 3. Clean tags.json - remove references to non-existent files
+    const updatedTags = tags.map((tag) => ({
+      ...tag,
+      fileIds: tag.fileIds.filter((fileId) => validFileIds.has(fileId)),
+    }))
+
+    // 4. Clean bundles.json - remove references to non-existent files
+    const updatedBundles = bundles.map((bundle) => ({
+      ...bundle,
+      fileIds: bundle.fileIds.filter((fileId) => validFileIds.has(fileId)),
+      status: bundle.fileIds.some((fileId) => !validFileIds.has(fileId))
+        ? ('stale' as const)
+        : bundle.status,
+    }))
+
+    // 5. Write all files back in one atomic operation
+    await Promise.all([
+      updateFiles(updatedFiles),
+      updateTags(updatedTags),
+      updateBundles(updatedBundles),
+    ])
+  } catch (error) {
+    console.error('Failed to synchronize database:', error)
+    throw error
+  }
 }

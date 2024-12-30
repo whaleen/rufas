@@ -7,6 +7,9 @@ import {
   updateFiles,
   getAllFiles,
   initializeDatabaseDir,
+  cleanupDeletedFile,
+  cleanupOrphanedFiles,
+  synchronizeDatabase,
 } from '../databaseOperations'
 import { type RufasFile } from '../database'
 
@@ -50,11 +53,14 @@ interface FileSystemState {
   dirHandle: FileSystemDirectoryHandle | null
   isPolling: boolean
   initialized: boolean
+  selectedFiles: string[]
   isInitialized: () => boolean
   openFolder: () => Promise<void>
   closeFolder: () => void
   refreshContents: () => Promise<void>
   setPolling: (enabled: boolean) => void
+  setSelectedFiles: (files: string[]) => void
+  toggleFileSelection: (filePath: string) => void
 }
 
 export const useFileSystemStore = create<FileSystemState>((set, get) => ({
@@ -62,8 +68,24 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
   dirHandle: null,
   isPolling: FILE_SYSTEM_CONFIG.polling.enabled,
   initialized: false,
+  selectedFiles: [],
 
   isInitialized: () => get().initialized,
+
+  setSelectedFiles: (files) => {
+    set({ selectedFiles: files })
+  },
+
+  toggleFileSelection: (filePath) => {
+    const currentSelected = get().selectedFiles
+    const isSelected = currentSelected.includes(filePath)
+
+    if (isSelected) {
+      set({ selectedFiles: currentSelected.filter((f) => f !== filePath) })
+    } else {
+      set({ selectedFiles: [...currentSelected, filePath] })
+    }
+  },
 
   openFolder: async () => {
     try {
@@ -81,7 +103,7 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
         await updateFiles(initialFiles)
       } else {
         // If .rufas exists, just ensure the directory structure is valid
-        console.log('Found existing .rufas directory')
+        console.log('Found existing 🦘 .rufas directory ')
         await initializeDatabaseDir(dirHandle)
 
         // Update file registry with current files
@@ -116,7 +138,12 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
   },
 
   closeFolder: () => {
-    set({ dirHandle: null, entries: [], initialized: false })
+    set({
+      dirHandle: null,
+      entries: [],
+      initialized: false,
+      selectedFiles: [],
+    })
   },
 
   refreshContents: async () => {
@@ -124,41 +151,17 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
     if (!dirHandle) return
 
     try {
+      // Get the current state of the filesystem
       const entries = await getDirectoryContents(dirHandle)
       const currentFiles = getAllFileEntries(entries)
 
-      // Get existing files from database
-      const databaseFiles = await getAllFiles()
+      // Synchronize our database with reality
+      await synchronizeDatabase(currentFiles)
 
-      // Create sets of paths for comparison
-      const currentPaths = new Set(currentFiles.map((f) => f.path))
-      const databasePaths = new Set(databaseFiles.map((f) => f.path))
-
-      // Find new files
-      const newFiles = currentFiles.filter((f) => !databasePaths.has(f.path))
-
-      // Keep existing files that weren't removed, preserving their metadata
-      const keptFiles = databaseFiles
-        .filter((f) => currentPaths.has(f.path))
-        .map((existingFile) => {
-          const currentFile = currentFiles.find(
-            (f) => f.path === existingFile.path
-          )
-          return {
-            ...existingFile,
-            lastModified:
-              currentFile?.lastModified ?? existingFile.lastModified,
-          }
-        })
-
-      // Combine kept files with new files
-      const updatedFiles = [...keptFiles, ...newFiles]
-
-      // Update database
-      await updateFiles(updatedFiles)
-
+      // Update UI
       set({ entries })
 
+      // Schedule next poll if needed
       if (isPolling) {
         setTimeout(get().refreshContents, FILE_SYSTEM_CONFIG.polling.intervalMs)
       }

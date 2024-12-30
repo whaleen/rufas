@@ -347,16 +347,25 @@ const TreeIcon = ({
 
 const TreeActions = ({
     children,
-    isSelected
+    isSelected,
+    className
 }: {
     children: React.ReactNode
     isSelected: boolean
+    className?: string
 }) => {
     return (
         <div
             className={cn(
-                isSelected ? 'block' : 'hidden',
-                'absolute right-3 group-hover:block'
+                'absolute right-3',
+                className,
+                // Remove the hidden classes and hover states if it's a tag dot
+                children && children.toString().includes('TagDots')
+                    ? 'block'
+                    : cn(
+                        isSelected ? 'block' : 'hidden',
+                        'group-hover:block'
+                    )
             )}
         >
             {children}

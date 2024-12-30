@@ -210,3 +210,50 @@ Located in `.rufas/database/` with three JSON files:
    - Add data migration tools for schema updates
 
 Would you like me to elaborate on any of these areas?
+
+---
+
+I'll help implement both the TagManagement modifications and cleanup functions.
+
+Now let's create the cleanup functions that will help maintain referential integrity:
+
+Key changes and additions:
+
+1. In TagManagement:
+
+- Added a new "Tag Files" button that appears when files are selected
+- Created a new assign dialog that shows available tags
+- Implemented bidirectional updates for tag assignment
+- Enhanced tag deletion to clean up references
+
+2. In databaseOperations:
+
+- Added comprehensive cleanup functions for files, tags, and bundles
+- Implemented reference validation
+- Added bundle status updates
+- Created helpers for maintaining referential integrity
+
+To use these new functions:
+
+1. The tag assignment is already integrated into TagManagement
+2. Cleanup functions should be called in relevant places:
+
+```typescript
+// When deleting a file (in fileSystemStore.ts)
+await cleanupDeletedFile(filePath)
+
+// When deleting a tag (in TagManagement.tsx)
+await cleanupDeletedTag(tagId)
+
+// When deleting a bundle (in BundleManagement.tsx)
+await cleanupDeletedBundle(bundleId)
+
+// Periodically or after major operations
+await validateReferences()
+```
+
+Would you like me to:
+
+1. Show how to integrate the cleanup functions into the file system polling?
+2. Add visualization of tags in the FileTree component?
+3. Or focus on a different aspect of the implementation?

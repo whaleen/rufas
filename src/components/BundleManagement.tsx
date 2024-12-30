@@ -21,25 +21,40 @@ import {
   updateBundles
 } from '../databaseOperations'
 import { type RufasBundle } from '../database'
+import { useFileSystem } from '../contexts/FileSystemContext'
 import { useFileSystemStore } from '../store/fileSystemStore'
 
-interface BundleManagementProps {
-  selectedFiles: string[]
-}
-
-export function BundleManagement({ selectedFiles }: BundleManagementProps) {
+export function BundleManagement() {
+  const selectedFiles = useFileSystemStore(state => state.selectedFiles)
   const [bundles, setBundles] = useState<RufasBundle[]>([])
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [selectedBundle, setSelectedBundle] = useState<RufasBundle | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const initialized = useFileSystemStore(state => state.initialized)
+  const { initialized } = useFileSystem()
   const [newBundle, setNewBundle] = useState({
     name: '',
     description: '',
     isMaster: false
   })
+  const dirHandle = useFileSystemStore(state => state.dirHandle) // Add this
+
+  useEffect(() => {
+    // Clear state when folder changes
+    if (!dirHandle) {
+      setBundles([])
+      setSelectedBundle(null)
+      setError(null)
+      setIsCreateOpen(false)
+      setIsDeleteOpen(false)
+      setIsEditOpen(false)
+      return
+    }
+
+    // Load bundles when a folder is selected
+    loadBundles()
+  }, [dirHandle]) // React to folder changes
 
   useEffect(() => {
     if (initialized) {
@@ -152,7 +167,7 @@ export function BundleManagement({ selectedFiles }: BundleManagementProps) {
           <DialogTrigger asChild>
             <Button
               size="sm"
-              className="flex items-center gap-2"
+              variant="outline"
               disabled={selectedFiles.length === 0}
             >
               <Plus className="h-4 w-4" />
@@ -222,68 +237,110 @@ export function BundleManagement({ selectedFiles }: BundleManagementProps) {
       </div>
 
       {/* Edit Dialog */}
+      {/* Edit Bundle Dialog */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Edit Bundle</DialogTitle>
             <DialogDescription>
-              Modify the bundle properties.
+              Modify the bundle properties and manage included files.
             </DialogDescription>
           </DialogHeader>
+
           {error && (
             <Alert variant="destructive">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+
           {selectedBundle && (
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-name" className="text-right">Name</Label>
-                <Input
-                  id="edit-name"
-                  value={selectedBundle.name}
-                  onChange={(e) => setSelectedBundle({ ...selectedBundle, name: e.target.value })}
-                  className="col-span-3"
-                  maxLength={50}
-                />
+            <div className="space-y-6 py-4">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-name">Name</Label>
+                  <Input
+                    id="edit-name"
+                    value={selectedBundle.name}
+                    onChange={(e) => setSelectedBundle({ ...selectedBundle, name: e.target.value })}
+                    maxLength={50}
+                    placeholder="Enter bundle name..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-description">Description</Label>
+                  <Input
+                    id="edit-description"
+                    value={selectedBundle.description}
+                    onChange={(e) => setSelectedBundle({ ...selectedBundle, description: e.target.value })}
+                    maxLength={200}
+                    placeholder="Enter bundle description..."
+                  />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="edit-isMaster"
+                    checked={selectedBundle.isMaster}
+                    onChange={(e) => setSelectedBundle({ ...selectedBundle, isMaster: e.target.checked })}
+                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <Label htmlFor="edit-isMaster" className="font-normal">
+                    Set as master bundle
+                  </Label>
+                </div>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-description" className="text-right">Description</Label>
-                <Input
-                  id="edit-description"
-                  value={selectedBundle.description}
-                  onChange={(e) => setSelectedBundle({ ...selectedBundle, description: e.target.value })}
-                  className="col-span-3"
-                  maxLength={200}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-isMaster" className="text-right">Master Bundle</Label>
-                <Input
-                  id="edit-isMaster"
-                  type="checkbox"
-                  checked={selectedBundle.isMaster}
-                  onChange={(e) => setSelectedBundle({ ...selectedBundle, isMaster: e.target.checked })}
-                  className="col-span-3 h-4 w-4"
-                />
-              </div>
-              <div className="col-span-4">
-                <Label className="text-sm text-muted-foreground">Bundled Files:</Label>
-                <ScrollArea className="h-32 w-full rounded-md border mt-2">
-                  <div className="p-4">
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label>Included Files</Label>
+                  <span className="text-xs text-muted-foreground">
+                    {selectedBundle.fileIds.length} files
+                  </span>
+                </div>
+
+                <ScrollArea className="h-[200px] rounded-md border">
+                  <div className="p-4 space-y-2">
                     {selectedBundle.fileIds.map((file) => (
-                      <div key={file} className="text-sm">{file}</div>
+                      <div
+                        key={file}
+                        className="flex items-center justify-between text-sm py-1 px-2 hover:bg-muted rounded-sm group"
+                      >
+                        <span className="truncate">{file}</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 opacity-0 group-hover:opacity-100"
+                          onClick={() => {
+                            setSelectedBundle({
+                              ...selectedBundle,
+                              fileIds: selectedBundle.fileIds.filter(f => f !== file)
+                            })
+                          }}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
                     ))}
                   </div>
                 </ScrollArea>
               </div>
             </div>
           )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
-            <Button onClick={() => selectedBundle && handleEditBundle(selectedBundle)}>
-              Save Changes
-            </Button>
+
+          <DialogFooter className="sm:justify-between">
+            <div className="flex items-center text-xs text-muted-foreground">
+              Last modified: {selectedBundle ? new Date(selectedBundle.lastBundled).toLocaleString() : ''}
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => selectedBundle && handleEditBundle(selectedBundle)}>
+                Save Changes
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

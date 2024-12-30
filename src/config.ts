@@ -11,7 +11,7 @@ export const FILE_SYSTEM_CONFIG = {
   // Polling configuration
   polling: {
     enabled: true,
-    intervalMs: 5000, // 5 seconds
+    intervalMs: 3000, // 3 seconds
   },
 } as const
 
