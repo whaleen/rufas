@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+// import DatabaseView from './components/DatabaseView'
 // import Chat from './components/Chat'
 
 const FolderButton = ({ openFolder, closeFolder }: {
@@ -93,7 +94,7 @@ const MainContent = () => {
   }
 
   return (
-    <div className="grid grid-cols-[320px_480px_1fr] h-screen">
+    <div className="grid grid-cols-[320px_480px_480px_480px_1280px] h-screen">
       <div className="border-r">
         <div className="flex gap-2 p-4 pb-0 items-center">
           <div className="text-xs select-none text-muted">
@@ -108,6 +109,8 @@ const MainContent = () => {
 
         <div className="flex items-center justify-between p-4">
           <HeartbeatIndicator />
+
+
         </div>
 
 
@@ -118,11 +121,26 @@ const MainContent = () => {
 
       <div className="border-r px-8">
         <TagManagement />
-        <BundleManagement />
+
       </div>
 
-      <div>
+      <div className="border-r p-4">
         {/* <Chat /> */}
+        <BundleManagement />
+        {/* <DatabaseView /> */}
+
+      </div>
+
+      <div className="border-r p-4">
+        {/* <Chat /> */}
+        {/* <BundleManagement /> */}
+        {/* <DatabaseView /> */}
+      </div>
+
+      <div className="border-r p-4">
+        {/* <Chat /> */}
+        {/* <BundleManagement /> */}
+        {/* <DatabaseView /> */}
       </div>
     </div>
   )

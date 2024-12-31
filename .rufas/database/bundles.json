@@ -1,43 +1,85 @@
 [
   {
-    "name": "Big Chungus",
-    "description": "This is the complete database. Don't goof this shit up. ",
-    "isMaster": true,
-    "fileIds": [],
-    "id": "b_1735451717963",
-    "createdAt": 1735451717963,
-    "lastBundled": 1735525091236,
-    "status": "fresh"
-  },
-  {
-    "name": "Style",
-    "description": "Just the UI components, config, and some other shit...",
+    "name": "Docs",
+    "description": "These should be more refined and less redundant by comparison to one another but let's continue to refine or clarify. ",
     "isMaster": false,
     "fileIds": [
-      "src/components/ui/dropdown-menu.tsx",
-      "src/components/ui/alert.tsx",
-      "src/components/ui/button.tsx",
-      "src/components/FileTree.tsx",
-      "src/components/TagManagement.tsx",
+      "docs/all-about-the-drift.md",
+      "docs/core-concepts.md",
+      "docs/features.md",
+      "docs/lean-by-design.md",
+      "docs/quick-start.md",
+      "docs/when to use-rufas.md",
+      "README.md"
+    ],
+    "id": "b_1735621373188",
+    "createdAt": 1735621373188,
+    "lastExport": {
+      "timestamp": 1735622580224,
+      "fileIds": [
+        "docs/all-about-the-drift.md",
+        "docs/core-concepts.md",
+        "docs/features.md",
+        "docs/lean-by-design.md",
+        "docs/quick-start.md",
+        "docs/when to use-rufas.md",
+        "README.md"
+      ]
+    },
+    "status": "stale"
+  },
+  {
+    "name": "rufas",
+    "description": "let's work on rufas",
+    "isMaster": false,
+    "fileIds": [
+      "docs/all-about-the-drift.md",
+      "docs/core-concepts.md",
+      "docs/features.md",
+      "docs/lean-by-design.md",
+      "docs/quick-start.md",
+      "docs/when to use-rufas.md",
       "src/components/BundleManagement.tsx",
-      "src/components/ui/scroll-area.tsx"
+      "src/components/BundleMetrics.tsx",
+      "src/components/FileTree.tsx",
+      "src/components/FileTreeControls.tsx",
+      "src/components/TagManagement.tsx",
+      "src/components/tree-view.tsx",
+      "src/contexts/FileSystemContext.tsx",
+      "src/store/fileSystemStore.ts",
+      "src/utils/fileSystem.ts",
+      "src/config.ts",
+      "src/database.ts",
+      "src/databaseOperations.ts",
+      "src/vite-env.d.ts",
+      "README.md"
     ],
-    "id": "b_1735454294664",
-    "createdAt": 1735454294664,
-    "lastBundled": 1735459559215,
-    "status": "fresh"
-  },
-  {
-    "name": "Issues",
-    "description": "Prioritized issues to discuss and act on. ",
-    "isMaster": false,
-    "fileIds": [
-      "src/issues/better-days.md",
-      "src/issues/cool-shit.md"
-    ],
-    "id": "b_1735463396580",
-    "createdAt": 1735463396580,
-    "lastBundled": 1735463431667,
-    "status": "fresh"
+    "id": "b_1735627741084",
+    "createdAt": 1735627741084,
+    "lastExport": {
+      "timestamp": 1735635761521,
+      "fileIds": [
+        "docs/all-about-the-drift.md",
+        "docs/core-concepts.md",
+        "docs/features.md",
+        "docs/lean-by-design.md",
+        "docs/quick-start.md",
+        "docs/when to use-rufas.md",
+        "src/components/BundleManagement.tsx",
+        "src/components/BundleMetrics.tsx",
+        "src/components/FileTree.tsx",
+        "src/components/FileTreeControls.tsx",
+        "src/components/TagManagement.tsx",
+        "src/components/tree-view.tsx",
+        "src/contexts/FileSystemContext.tsx",
+        "src/store/fileSystemStore.ts",
+        "src/utils/fileSystem.ts",
+        "src/config.ts",
+        "src/database.ts",
+        "src/databaseOperations.ts",
+        "src/vite-env.d.ts",
+        "README.md"
+      ]
+    }
   }
 ]

@@ -21,7 +21,7 @@ export function Chat() {
   const [messages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hey there! I can help analyze your files or bundles. What would you like to know?'
+      content: 'Hey Rufas! What are we going to work on?'
     },
     {
       role: 'user',
@@ -54,7 +54,7 @@ export function Chat() {
       </div>
 
       <ScrollArea className="flex-grow my-4">
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           {messages.map((message, i) => (
             <div
               key={i}
@@ -98,7 +98,7 @@ export function Chat() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </ScrollArea>
 
       <div className="pt-4 border-t">
@@ -110,7 +110,7 @@ export function Chat() {
             <Paperclip className="h-4 w-4" />
           </Button>
           <Input
-            placeholder="Ask about your files and bundles..."
+            placeholder="Speak with your assistant..."
             className="flex-grow"
           />
           <Button size="icon">

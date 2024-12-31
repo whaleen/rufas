@@ -1,289 +1,640 @@
 [
   {
-    "id": "docs/dude.md",
-    "path": "docs/dude.md",
-    "tagIds": [],
+    "id": "docs/all-about-the-drift.md",
+    "path": "docs/all-about-the-drift.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735627835655
+  },
+  {
+    "id": "docs/core-concepts.md",
+    "path": "docs/core-concepts.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735621200781
+  },
+  {
+    "id": "docs/features.md",
+    "path": "docs/features.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735622029357
+  },
+  {
+    "id": "docs/lean-by-design.md",
+    "path": "docs/lean-by-design.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735608399412
+  },
+  {
+    "id": "docs/quick-start.md",
+    "path": "docs/quick-start.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735622041206
+  },
+  {
+    "id": "docs/when to use-rufas.md",
+    "path": "docs/when to use-rufas.md",
+    "tagIds": [
+      "t_1735537146969"
+    ],
+    "bundleIds": [
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735621373188",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735608925785
+  },
+  {
+    "id": "issues/bundle-editing.md",
+    "path": "issues/bundle-editing.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735619157575
+  },
+  {
+    "id": "issues/docs.md",
+    "path": "issues/docs.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735619160755
+  },
+  {
+    "id": "issues/file-count-in-tag-card.md",
+    "path": "issues/file-count-in-tag-card.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735618858153
+  },
+  {
+    "id": "issues/modified-files.md",
+    "path": "issues/modified-files.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
     "bundleIds": [],
-    "lastModified": 1735525151656
+    "lastModified": 1735626671848
+  },
+  {
+    "id": "issues/select-all.md",
+    "path": "issues/select-all.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735618290179
+  },
+  {
+    "id": "issues/tag-defaults.md",
+    "path": "issues/tag-defaults.md",
+    "tagIds": [
+      "t_1735618330151"
+    ],
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735619152151
   },
   {
     "id": "public/vite.svg",
     "path": "public/vite.svg",
     "tagIds": [],
     "bundleIds": [],
-    "lastModified": 1735525151656
+    "lastModified": 1735384173082
   },
   {
     "id": "src/assets/react.svg",
     "path": "src/assets/react.svg",
     "tagIds": [],
     "bundleIds": [],
-    "lastModified": 1735525151656
+    "lastModified": 1735384173086
   },
   {
     "id": "src/components/ui/alert.tsx",
     "path": "src/components/ui/alert.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735444592895
   },
   {
     "id": "src/components/ui/button.tsx",
     "path": "src/components/ui/button.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735391873608
   },
   {
     "id": "src/components/ui/dialog.tsx",
     "path": "src/components/ui/dialog.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735443727387
   },
   {
     "id": "src/components/ui/dropdown-menu.tsx",
     "path": "src/components/ui/dropdown-menu.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735439018413
   },
   {
     "id": "src/components/ui/input.tsx",
     "path": "src/components/ui/input.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735443743319
   },
   {
     "id": "src/components/ui/label.tsx",
     "path": "src/components/ui/label.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735443760027
   },
   {
     "id": "src/components/ui/scroll-area.tsx",
     "path": "src/components/ui/scroll-area.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735397479048
   },
   {
     "id": "src/components/ui/select.tsx",
     "path": "src/components/ui/select.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735471362059
+  },
+  {
+    "id": "src/components/ui/tabs.tsx",
+    "path": "src/components/ui/tabs.tsx",
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735619888322"
+    ],
+    "lastModified": 1735556298306
   },
   {
     "id": "src/components/ui/tooltip.tsx",
     "path": "src/components/ui/tooltip.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735458748268
   },
   {
     "id": "src/components/BundleManagement.tsx",
     "path": "src/components/BundleManagement.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735625427344
+  },
+  {
+    "id": "src/components/BundleMetrics.tsx",
+    "path": "src/components/BundleMetrics.tsx",
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735628194619
   },
   {
     "id": "src/components/Chat.tsx",
     "path": "src/components/Chat.tsx",
     "tagIds": [],
+    "bundleIds": [
+      "b_1735536878317"
+    ],
+    "lastModified": 1735616877715
+  },
+  {
+    "id": "src/components/DatabaseView.tsx",
+    "path": "src/components/DatabaseView.tsx",
+    "tagIds": [],
     "bundleIds": [],
-    "lastModified": 1735525151656
+    "lastModified": 1735609470455
   },
   {
     "id": "src/components/FileTree.tsx",
     "path": "src/components/FileTree.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735473483765
   },
   {
     "id": "src/components/FileTreeControls.tsx",
     "path": "src/components/FileTreeControls.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735470302000
   },
   {
     "id": "src/components/HeartbeatIndicator.tsx",
     "path": "src/components/HeartbeatIndicator.tsx",
     "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735468346173
   },
   {
     "id": "src/components/mode-toggle.tsx",
     "path": "src/components/mode-toggle.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735464053839
   },
   {
     "id": "src/components/TagManagement.tsx",
     "path": "src/components/TagManagement.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735614903177",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735626755156
   },
   {
     "id": "src/components/theme-provider.tsx",
     "path": "src/components/theme-provider.tsx",
     "tagIds": [
-      "t_1735467661166"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735438682794
   },
   {
     "id": "src/components/tree-view.tsx",
     "path": "src/components/tree-view.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735604916185"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735458066288
   },
   {
     "id": "src/contexts/FileSystemContext.tsx",
     "path": "src/contexts/FileSystemContext.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
-  },
-  {
-    "id": "src/issues/better-days.md",
-    "path": "src/issues/better-days.md",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
-  },
-  {
-    "id": "src/issues/cool-shit.md",
-    "path": "src/issues/cool-shit.md",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735453286030
   },
   {
     "id": "src/lib/utils.ts",
     "path": "src/lib/utils.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735384343099
   },
   {
     "id": "src/store/fileSystemStore.ts",
     "path": "src/store/fileSystemStore.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735626720563
   },
   {
     "id": "src/utils/fileSystem.ts",
     "path": "src/utils/fileSystem.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735437729048
   },
   {
     "id": "src/App.tsx",
     "path": "src/App.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735619177817
   },
   {
     "id": "src/config.ts",
     "path": "src/config.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735617315224
   },
   {
     "id": "src/database.ts",
     "path": "src/database.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735606038936",
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735541983726
   },
   {
     "id": "src/databaseOperations.ts",
     "path": "src/databaseOperations.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605612208"
+    ],
+    "bundleIds": [
+      "b_1735598875441",
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735630857596
   },
   {
     "id": "src/index.css",
     "path": "src/index.css",
     "tagIds": [
-      "t_1735460229671"
+      "t_1735618749522"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735555192852
   },
   {
     "id": "src/main.tsx",
     "path": "src/main.tsx",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735450762918
   },
   {
     "id": "src/vite-env.d.ts",
     "path": "src/vite-env.d.ts",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735606038936"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735384173088
   },
   {
     "id": "components.json",
     "path": "components.json",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735605212700"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322",
+      "b_1735623500517"
+    ],
+    "lastModified": 1735384338824
   },
   {
     "id": "eslint.config.js",
     "path": "eslint.config.js",
-    "tagIds": [],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "tagIds": [
+      "t_1735453523393"
+    ],
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735430815463
   },
   {
     "id": "index.html",
     "path": "index.html",
     "tagIds": [
-      "t_1735453523393"
+      "t_1735605212700"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
-  },
-  {
-    "id": "package-lock.json",
-    "path": "package-lock.json",
-    "tagIds": [
-      "t_1735453523393"
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "lastModified": 1735616625211
   },
   {
     "id": "package.json",
@@ -291,36 +642,56 @@
     "tagIds": [
       "t_1735453523393"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735556297252
   },
   {
     "id": "postcss.config.js",
     "path": "postcss.config.js",
     "tagIds": [
-      "t_1735460229671",
-      "t_1735453523393"
+      "t_1735453523393",
+      "t_1735618749522"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735384212092
   },
   {
     "id": "README.md",
     "path": "README.md",
     "tagIds": [
-      "t_1735453523393"
+      "t_1735537146969"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735619888322",
+      "b_1735621373188",
+      "b_1735623500517",
+      "b_1735627741084",
+      "b_1735635753094"
+    ],
+    "lastModified": 1735622898276
   },
   {
     "id": "tailwind.config.js",
     "path": "tailwind.config.js",
     "tagIds": [
-      "t_1735460229671"
+      "t_1735453523393",
+      "t_1735618749522"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735384339600
   },
   {
     "id": "tsconfig.app.json",
@@ -328,8 +699,13 @@
     "tagIds": [
       "t_1735453523393"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735384285160
   },
   {
     "id": "tsconfig.json",
@@ -337,8 +713,13 @@
     "tagIds": [
       "t_1735453523393"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735430608354
   },
   {
     "id": "tsconfig.node.json",
@@ -346,8 +727,13 @@
     "tagIds": [
       "t_1735453523393"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735386064870
   },
   {
     "id": "vite.config.ts",
@@ -355,7 +741,12 @@
     "tagIds": [
       "t_1735453523393"
     ],
-    "bundleIds": [],
-    "lastModified": 1735525151656
+    "bundleIds": [
+      "b_1735536878317",
+      "b_1735539819139",
+      "b_1735614903177",
+      "b_1735619888322"
+    ],
+    "lastModified": 1735545982231
   }
 ]

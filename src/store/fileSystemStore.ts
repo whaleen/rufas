@@ -7,32 +7,64 @@ import {
   updateFiles,
   getAllFiles,
   initializeDatabaseDir,
-  cleanupDeletedFile,
-  cleanupOrphanedFiles,
   synchronizeDatabase,
 } from '../databaseOperations'
 import { type RufasFile } from '../database'
 
-const getAllFileEntries = (entries: Entry[]): RufasFile[] => {
+// Helper function to get a file handle from a path
+async function getFileHandleFromPath(
+  rootHandle: FileSystemDirectoryHandle,
+  path: string
+): Promise<FileSystemFileHandle> {
+  const parts = path.split('/')
+  const fileName = parts.pop()
+  if (!fileName) throw new Error('Invalid path')
+
+  let currentHandle: FileSystemDirectoryHandle = rootHandle
+  for (const part of parts) {
+    if (part) {
+      currentHandle = await currentHandle.getDirectoryHandle(part)
+    }
+  }
+  return currentHandle.getFileHandle(fileName)
+}
+
+// Modified to not set lastModified
+const getAllFileEntries = async (
+  dirHandle: FileSystemDirectoryHandle,
+  entries: Entry[]
+): Promise<RufasFile[]> => {
   const files: RufasFile[] = []
 
-  const processEntry = (entry: Entry, parentPath: string = '') => {
+  const processEntry = async (entry: Entry, parentPath: string = '') => {
     const fullPath = parentPath ? `${parentPath}/${entry.name}` : entry.name
 
     if (entry.type === 'file') {
-      files.push({
-        id: fullPath,
-        path: fullPath,
-        tagIds: [],
-        bundleIds: [],
-        lastModified: Date.now(),
-      })
+      try {
+        const fileHandle = await getFileHandleFromPath(dirHandle, fullPath)
+        const fileObj = await fileHandle.getFile()
+
+        files.push({
+          id: fullPath,
+          path: fullPath,
+          tagIds: [],
+          bundleIds: [],
+          lastModified: fileObj.lastModified,
+        })
+      } catch (error) {
+        console.error(`Error processing file ${fullPath}:`, error)
+      }
     }
 
-    entry.children?.forEach((child) => processEntry(child, fullPath))
+    for (const child of entry.children || []) {
+      await processEntry(child, fullPath)
+    }
   }
 
-  entries.forEach((entry) => processEntry(entry))
+  for (const entry of entries) {
+    await processEntry(entry)
+  }
+
   return files
 }
 
@@ -96,18 +128,16 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
       const hasRufas = await checkIfRufasExists(dirHandle)
 
       if (!hasRufas) {
-        // Only initialize if .rufas doesn't exist
         console.log('Initializing new .rufas directory')
         await initializeDatabase(dirHandle)
-        const initialFiles = getAllFileEntries(entries)
+        const initialFiles = await getAllFileEntries(dirHandle, entries)
         await updateFiles(initialFiles)
       } else {
-        // If .rufas exists, just ensure the directory structure is valid
-        console.log('Found existing 🦘 .rufas directory ')
+        console.log('Found existing 🦘 .rufas directory')
         await initializeDatabaseDir(dirHandle)
 
         // Update file registry with current files
-        const currentFiles = getAllFileEntries(entries)
+        const currentFiles = await getAllFileEntries(dirHandle, entries)
         const existingFiles = await getAllFiles()
 
         // Merge existing files with current files, preserving tags and bundles
@@ -151,14 +181,32 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
     if (!dirHandle) return
 
     try {
-      // Get the current state of the filesystem
+      // Get current state of the filesystem
       const entries = await getDirectoryContents(dirHandle)
-      const currentFiles = getAllFileEntries(entries)
+      const currentFiles = await getAllFileEntries(dirHandle, entries)
+      const existingFiles = await getAllFiles()
 
-      // Synchronize our database with reality
-      await synchronizeDatabase(currentFiles)
+      // Merge current files with existing files, preserving relationships
+      const updatedFiles = currentFiles.map((currentFile) => {
+        const existingFile = existingFiles.find((f) => f.id === currentFile.id)
+        if (
+          existingFile &&
+          existingFile.lastModified === currentFile.lastModified
+        ) {
+          // File hasn't changed, keep existing data
+          return existingFile
+        } else {
+          // File is new or modified, use new lastModified but preserve relationships
+          return {
+            ...currentFile,
+            tagIds: existingFile?.tagIds || [],
+            bundleIds: existingFile?.bundleIds || [],
+          }
+        }
+      })
 
-      // Update UI
+      // Synchronize database and update UI
+      await synchronizeDatabase(updatedFiles)
       set({ entries })
 
       // Schedule next poll if needed

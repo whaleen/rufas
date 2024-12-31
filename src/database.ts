@@ -27,8 +27,10 @@ export type RufasBundle = {
   fileIds: string[] // Files in this bundle
   isMaster: boolean // Whether this is the master bundle
   createdAt: number // When bundle was created
-  lastBundled: number // Last time bundle was generated
-  status: 'fresh' | 'stale' // Stale if any included files modified after lastBundled
+  lastExport: {
+    timestamp: number
+    fileIds: string[] // Files that were included in last export
+  } | null
 }
 
 // I don't know if we need to export these from a ts file but it seemed a logical way to implment the type system that our "database" can be built from.

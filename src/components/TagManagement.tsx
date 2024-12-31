@@ -19,6 +19,7 @@ import { type RufasTag } from '../database'
 import { useFileSystem } from '@/contexts/FileSystemContext'
 import { useFileSystemStore } from '../store/fileSystemStore'
 
+
 export function TagManagement() {
   const [tags, setTags] = useState<RufasTag[]>([])
   const [isCreateOpen, setIsCreateOpen] = useState(false)
@@ -30,12 +31,14 @@ export function TagManagement() {
   const selectedFiles = useFileSystemStore(state => state.selectedFiles)
   const { initialized } = useFileSystem()
   const dirHandle = useFileSystemStore(state => state.dirHandle)
-
   const [newTag, setNewTag] = useState({
     name: '',
     description: '',
     color: '#3B82F6' // Default color
   })
+
+  const isPolling = useFileSystemStore(state => state.isPolling)
+  const entries = useFileSystemStore(state => state.entries) // Add this to detect file changes
 
   useEffect(() => {
     if (initialized) {
@@ -59,6 +62,12 @@ export function TagManagement() {
     // Load tags when a folder is selected
     loadTags()
   }, [dirHandle]) // React to folder changes
+
+  useEffect(() => {
+    if (isPolling && initialized) {
+      loadTags()
+    }
+  }, [isPolling, entries, initialized]) // Reload when entries change during polling
 
   // Function to load tags from database
   const loadTags = async () => {
@@ -98,6 +107,8 @@ export function TagManagement() {
         updateTags(tags.map(t => t.id === tag.id ? updatedTag : t)),
         updateFiles(updatedFiles)
       ])
+
+
 
       setIsAssignOpen(false)
       await loadTags()
@@ -385,7 +396,7 @@ export function TagManagement() {
           tags.map((tag) => (
             <div
               key={tag.id}
-              className="flex items-center justify-between p-2 rounded-md border"
+              className="flex items-center justify-between p-2 rounded-md bg-card border"
               style={{ borderLeftColor: tag.color, borderLeftWidth: '4px' }}
             >
               <div className="flex-grow">

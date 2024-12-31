@@ -4,66 +4,118 @@
     "description": "The stuff that nightmares are made of.",
     "color": "#7b8aa3",
     "fileIds": [
-      "vite.config.ts",
-      "tsconfig.node.json",
-      "tsconfig.json",
-      "tsconfig.app.json",
-      "postcss.config.js",
       "eslint.config.js",
-      "public/vite.svg",
-      "src/components/ui/alert.tsx",
-      "src/components/ui/dialog.tsx",
-      "src/components/ui/button.tsx",
-      "src/components/ui/dropdown-menu.tsx",
-      "src/components/ui/input.tsx",
-      "src/components/ui/label.tsx",
-      "src/components/ui/scroll-area.tsx",
-      "components.json",
-      "index.html",
-      "package-lock.json",
       "package.json",
-      "README.md"
+      "postcss.config.js",
+      "tailwind.config.js",
+      "tsconfig.app.json",
+      "tsconfig.json",
+      "tsconfig.node.json",
+      "vite.config.ts"
     ],
     "id": "t_1735453523393"
   },
   {
-    "name": "style",
-    "description": "fancy ",
-    "color": "#f679e7",
+    "name": "doc",
+    "description": "What is Rufas and why is Rufas?",
+    "color": "#bbbd6b",
     "fileIds": [
-      "tailwind.config.js",
-      "postcss.config.js",
-      "src/index.css"
+      "docs/all-about-the-drift.md",
+      "docs/core-concepts.md",
+      "docs/features.md",
+      "docs/lean-by-design.md",
+      "docs/quick-start.md",
+      "docs/when to use-rufas.md",
+      "README.md"
     ],
-    "id": "t_1735460229671"
+    "id": "t_1735537146969"
   },
   {
-    "name": "api",
-    "description": "all the tubes and wires across the great flat earth",
-    "color": "#72a4f3",
-    "fileIds": [],
-    "id": "t_1735463294244"
-  },
-  {
-    "name": "ui",
-    "description": "shadcn ui and other base components ",
-    "color": "#633267",
+    "name": "features",
+    "description": "For main feature implementations. Components that implement major user-facing functionality",
+    "color": "#3B82F6",
     "fileIds": [
+      "src/components/BundleManagement.tsx",
+      "src/components/BundleMetrics.tsx",
+      "src/components/FileTree.tsx",
+      "src/components/FileTreeControls.tsx",
+      "src/components/TagManagement.tsx",
+      "src/components/tree-view.tsx"
+    ],
+    "id": "t_1735604916185"
+  },
+  {
+    "name": "components-ui",
+    "description": "For reusable UI components and interface elements. Basic building blocks like button.tsx, dialog.tsx, input.tsx.",
+    "color": "#f63c8d",
+    "fileIds": [
+      "src/components/ui/alert.tsx",
+      "src/components/ui/button.tsx",
       "src/components/ui/dialog.tsx",
       "src/components/ui/dropdown-menu.tsx",
       "src/components/ui/input.tsx",
       "src/components/ui/label.tsx",
+      "src/components/ui/scroll-area.tsx",
+      "src/components/ui/select.tsx",
+      "src/components/ui/tabs.tsx",
       "src/components/ui/tooltip.tsx",
       "src/components/mode-toggle.tsx",
-      "src/components/theme-provider.tsx"
+      "src/components/theme-provider.tsx",
+      "src/lib/utils.ts",
+      "src/App.tsx",
+      "src/main.tsx",
+      "components.json",
+      "index.html"
     ],
-    "id": "t_1735467661166"
+    "id": "t_1735605212700"
   },
   {
-    "name": "docs",
-    "description": "read this and then go code something useful",
+    "name": "core",
+    "description": "For critical system files that handle the fundamental operations. Files that implement the core concepts and handle state management",
+    "color": "#947ec9",
+    "fileIds": [
+      "src/contexts/FileSystemContext.tsx",
+      "src/store/fileSystemStore.ts",
+      "src/utils/fileSystem.ts",
+      "src/config.ts",
+      "src/database.ts",
+      "src/databaseOperations.ts"
+    ],
+    "id": "t_1735605612208"
+  },
+  {
+    "name": "types",
+    "description": "For type definitions and interfaces. Files that primarily define types and interfaces used across the project.",
+    "color": "#3cf69f",
+    "fileIds": [
+      "src/database.ts",
+      "src/vite-env.d.ts"
+    ],
+    "id": "t_1735606038936"
+  },
+  {
+    "name": "issues",
+    "description": "Stuff to work on. ",
     "color": "#3B82F6",
-    "fileIds": [],
-    "id": "t_1735522498140"
+    "fileIds": [
+      "issues/bundle-editing.md",
+      "issues/docs.md",
+      "issues/file-count-in-tag-card.md",
+      "issues/modified-files.md",
+      "issues/select-all.md",
+      "issues/tag-defaults.md"
+    ],
+    "id": "t_1735618330151"
+  },
+  {
+    "name": "style",
+    "description": "Tailwind. We also use shadcn/ui as a primary component library and that uses Tailwind as well. ",
+    "color": "#c993cc",
+    "fileIds": [
+      "src/index.css",
+      "postcss.config.js",
+      "tailwind.config.js"
+    ],
+    "id": "t_1735618749522"
   }
 ]

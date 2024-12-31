@@ -1,6 +1,6 @@
 // src/components/BundleManagement.tsx
 import { useState, useEffect } from 'react'
-import { Plus, X, Edit2, Package, RefreshCcw } from 'lucide-react'
+import { Plus, X, Edit2, Package, Download } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -17,12 +17,16 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   createBundle,
+  exportBundle,
   getAllBundles,
-  updateBundles
+  getAllFiles,
+  updateBundles,
+  updateFiles
 } from '../databaseOperations'
 import { type RufasBundle } from '../database'
 import { useFileSystem } from '../contexts/FileSystemContext'
 import { useFileSystemStore } from '../store/fileSystemStore'
+import BundleMetrics from './BundleMetrics'
 
 export function BundleManagement() {
   const selectedFiles = useFileSystemStore(state => state.selectedFiles)
@@ -39,6 +43,9 @@ export function BundleManagement() {
     isMaster: false
   })
   const dirHandle = useFileSystemStore(state => state.dirHandle) // Add this
+
+  const isPolling = useFileSystemStore(state => state.isPolling)
+  const entries = useFileSystemStore(state => state.entries) // Add this to detect file changes
 
   useEffect(() => {
     // Clear state when folder changes
@@ -62,9 +69,19 @@ export function BundleManagement() {
     }
   }, [initialized]) // Re-run when initialized changes
 
+
+
+  useEffect(() => {
+    if (isPolling && initialized) {
+      loadBundles()
+    }
+  }, [isPolling, entries, initialized]) // Reload when entries change during polling
+
   const loadBundles = async () => {
     try {
       const loadedBundles = await getAllBundles()
+      // console.log('Loaded bundles:', loadedBundles) // Add this line
+
       setBundles(loadedBundles)
       setError(null)
     } catch (error) {
@@ -126,36 +143,43 @@ export function BundleManagement() {
     try {
       validateBundle(bundle)
 
-      const updatedBundles = bundles.map(b =>
-        b.id === bundle.id ? {
-          ...bundle,
-          lastBundled: Date.now(),
-          status: 'fresh' as const  // or 'fresh' as RufasBundle['status']
-        } : b
-      )
-      await updateBundles(updatedBundles)
+      // 1. Get current files
+      const files = await getAllFiles()
+      // 
+      // 2. Update files.json - PROPERLY handle both adding and removing bundle IDs
+      const updatedFiles = files.map(file => {
+        if (bundle.fileIds.includes(file.id)) {
+          // This file should be in the bundle - ADD the bundleId if it's not there
+          return {
+            ...file,
+            bundleIds: [...new Set([...file.bundleIds, bundle.id])]
+          }
+        } else if (file.bundleIds.includes(bundle.id)) {
+          // File was removed from bundle - remove the bundleId
+          return {
+            ...file,
+            bundleIds: file.bundleIds.filter(id => id !== bundle.id)
+          }
+        }
+        return file
+      })
+
+      // 3. Save both updates
+      await Promise.all([
+        updateFiles(updatedFiles),
+        updateBundles(bundles.map(b =>
+          b.id === bundle.id ? {
+            ...bundle,
+            lastExport: b.lastExport
+          } : b
+        ))
+      ])
+
       setIsEditOpen(false)
       setSelectedBundle(null)
       await loadBundles()
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to update bundle')
-    }
-  }
-
-  const handleRefreshBundle = async (bundle: RufasBundle) => {
-    try {
-      const updatedBundles = bundles.map(b =>
-        b.id === bundle.id ? {
-          ...bundle,
-          lastBundled: Date.now(),
-          status: 'fresh' as const  // or 'fresh' as RufasBundle['status']
-        } : b
-      )
-      await updateBundles(updatedBundles)
-      await loadBundles()
-    } catch (error) {
-      console.error('Failed to refresh bundle:', error)
-      setError('Failed to refresh bundle')
     }
   }
 
@@ -295,9 +319,28 @@ export function BundleManagement() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <Label>Included Files</Label>
-                  <span className="text-xs text-muted-foreground">
-                    {selectedBundle.fileIds.length} files
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">
+                      {selectedBundle.fileIds.length} files
+                    </span>
+                    {selectedFiles.length > 0 && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          // Just update the local state
+                          // No need to update the database yet!!!
+                          setSelectedBundle({
+                            ...selectedBundle,
+                            fileIds: [...new Set([...selectedBundle.fileIds, ...selectedFiles])]
+                          })
+                        }}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Selected ({selectedFiles.length})
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
                 <ScrollArea className="h-[200px] rounded-md border">
@@ -331,7 +374,7 @@ export function BundleManagement() {
 
           <DialogFooter className="sm:justify-between">
             <div className="flex items-center text-xs text-muted-foreground">
-              Last modified: {selectedBundle ? new Date(selectedBundle.lastBundled).toLocaleString() : ''}
+              {selectedBundle ? new Date(selectedBundle.lastExport?.timestamp || 0).toLocaleString() : ''}
             </div>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setIsEditOpen(false)}>
@@ -374,9 +417,23 @@ export function BundleManagement() {
           bundles.map((bundle) => (
             <div
               key={bundle.id}
-              className="flex items-center justify-between p-2 rounded-md border"
+              className="relative flex flex-col gap-2 p-4 rounded-md border bg-card shadow"
             >
-              <div className="flex-grow">
+              {/* Close Button at the Top Right */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute top-2 right-2 h-8 w-8 p-0"
+                onClick={() => {
+                  setSelectedBundle(bundle);
+                  setIsDeleteOpen(true);
+                }}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+
+              {/* Content */}
+              <div>
                 <div className="flex items-center gap-2">
                   <Package className="h-4 w-4" />
                   <p className="font-medium">
@@ -387,39 +444,25 @@ export function BundleManagement() {
                       </span>
                     )}
                   </p>
-                  <span
-                    className={`ml-2 text-xs px-2 py-0.5 rounded ${bundle.status === 'fresh'
-                      ? 'bg-green-500/10 text-green-500'
-                      : 'bg-yellow-500/10 text-yellow-500'
-                      }`}
-                  >
-                    {bundle.status}
-                  </span>
                 </div>
                 {bundle.description && (
                   <p className="text-sm text-muted-foreground">{bundle.description}</p>
                 )}
-                <p className="text-xs text-muted-foreground mt-1">
-                  {bundle.fileIds.length} files • Last bundled: {new Date(bundle.lastBundled).toLocaleString()}
-                </p>
+
+                <div className="mt-2">
+                  <BundleMetrics bundle={bundle} />
+                </div>
               </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  onClick={() => handleRefreshBundle(bundle)}
-                  disabled={bundle.status === 'fresh'}
-                >
-                  <RefreshCcw className="h-4 w-4" />
-                </Button>
+
+              {/* Edit & Export Buttons at the Bottom */}
+              <div className="flex justify-end gap-2 mt-auto">
                 <Button
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0"
                   onClick={() => {
-                    setSelectedBundle(bundle)
-                    setIsEditOpen(true)
+                    setSelectedBundle(bundle);
+                    setIsEditOpen(true);
                   }}
                 >
                   <Edit2 className="h-4 w-4" />
@@ -428,18 +471,29 @@ export function BundleManagement() {
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0"
-                  onClick={() => {
-                    setSelectedBundle(bundle)
-                    setIsDeleteOpen(true)
+                  onClick={async () => {
+                    try {
+                      if (!dirHandle) throw new Error("No directory selected");
+                      await exportBundle(bundle.id, dirHandle);
+                    } catch (error) {
+                      setError("Failed to export bundle");
+                      console.error("Failed to export bundle:", error);
+                    }
                   }}
                 >
-                  <X className="h-4 w-4" />
+                  <Download className="h-4 w-4" />
                 </Button>
               </div>
+
+
+
             </div>
           ))
         )}
       </div>
+
+
+
     </div>
   )
 }
