@@ -127,7 +127,7 @@ export function TagManagement() {
     if (tag.name.length > 50) {
       throw new Error('Tag name must be less than 50 characters')
     }
-    if (tag.description.length > 200) {
+    if (tag.description.length > 420) {
       throw new Error('Description must be less than 200 characters')
     }
     if (!/^#[0-9A-Fa-f]{6}$/.test(tag.color)) {
@@ -290,7 +290,7 @@ export function TagManagement() {
                   value={newTag.description}
                   onChange={(e) => setNewTag({ ...newTag, description: e.target.value })}
                   className="col-span-3"
-                  maxLength={200}
+                  maxLength={420}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">

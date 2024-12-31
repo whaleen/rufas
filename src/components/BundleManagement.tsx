@@ -97,8 +97,8 @@ export function BundleManagement() {
     if (bundle.name.length > 50) {
       throw new Error('Bundle name must be less than 50 characters')
     }
-    if (bundle.description.length > 200) {
-      throw new Error('Description must be less than 200 characters')
+    if (bundle.description.length > 420) {
+      throw new Error('Description must be less than 420 characters')
     }
   }
 
@@ -228,7 +228,7 @@ export function BundleManagement() {
                   value={newBundle.description}
                   onChange={(e) => setNewBundle({ ...newBundle, description: e.target.value })}
                   className="col-span-3"
-                  maxLength={200}
+                  maxLength={420}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -297,7 +297,7 @@ export function BundleManagement() {
                     id="edit-description"
                     value={selectedBundle.description}
                     onChange={(e) => setSelectedBundle({ ...selectedBundle, description: e.target.value })}
-                    maxLength={200}
+                    maxLength={420}
                     placeholder="Enter bundle description..."
                   />
                 </div>
